@@ -39,6 +39,7 @@ $app->get(
 				} else if(is_numeric($derivative))
 				{
 					$specs['width'] = $specs['height'] = $derivative;
+					$specs['type'] = 'inset';
 				}
 			}
 
@@ -57,7 +58,7 @@ $app->get(
 				if( ! empty($specs['width']) && ! empty($specs['height']))
 				{
 					$image = $imagine->open($source_path . '/' . $filename)
-									->thumbnail( new Imagine\Image\Box($specs['width'], $specs['height']), 'outbound')
+									->thumbnail( new Imagine\Image\Box($specs['width'], $specs['height']), ( ! empty($specs['type'])) ? $specs['type'] : 'outbound')
 									->save($destination_path . '/' . $filename);
 					
 				} else 
