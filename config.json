@@ -1,0 +1,18 @@
+{
+    "image_dir": "img/",
+    "library": "Gd",
+    "sizes": {
+        "small" : {            
+            "width" : 180            
+        },
+        "medium" : {            
+            "width" : 375
+        },
+        "large" : {            
+            "width" : 480
+        },
+        "xlarge" : {            
+            "width" : 768
+        }
+    }
+}
