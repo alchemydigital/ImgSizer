@@ -1,6 +1,7 @@
 {
     "image_dir": "img/",
     "library": "Gd",
+    "memory_limit": "128M",
     "sizes": {
         "small" : {            
             "width" : 180            

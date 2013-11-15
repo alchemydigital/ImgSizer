@@ -3,6 +3,11 @@ require 'vendor/autoload.php';
 
 $config = json_decode(file_get_contents('config.json'), true);
 
+if( ! empty($config['memory_limit']))
+{
+	ini_set('memory_limit', $config['memory_limit']);
+}
+
 $app = new \Slim\Slim();
 
 $app->get(
