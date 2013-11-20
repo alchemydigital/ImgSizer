@@ -59,16 +59,36 @@ $app->get(
 				$class = "Imagine\\{$config['library']}\\Imagine";
 
 			    $imagine = new $class;
+
+			    $rotateVal = 0;
+
+			    if(in_array(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $source_path . '/' . $filename), array('image/jpeg', 'image/tiff')))
+			    {
+			    	$exifData = exif_read_data($source_path . '/' . $filename);
+
+			    	switch($exifData['Orientation']) {
+					    case 8:
+					        $rotateVal = -90;
+					        break;
+					    case 3:
+					        $rotateVal = 180;
+					        break;
+					    case 6:
+					        $rotateVal = 90;
+					        break;
+					}
+			    }
 				
 				if( ! empty($specs['width']) && ! empty($specs['height']))
 				{
 					$image = $imagine->open($source_path . '/' . $filename)
+									->rotate($rotateVal)
 									->thumbnail( new Imagine\Image\Box($specs['width'], $specs['height']), ( ! empty($specs['type'])) ? $specs['type'] : 'outbound')
 									->save($destination_path . '/' . $filename);
 					
 				} else 
 				{
-					$image = $imagine->open($source_path . '/' . $filename);
+					$image = $imagine->open($source_path . '/' . $filename)->rotate($rotateVal);
 
 					if(! empty($specs['width']))
 					{
