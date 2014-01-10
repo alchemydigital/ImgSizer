@@ -66,7 +66,8 @@ $app->get(
 			}
 
 			// Do the transformation(s)	
-			try {
+			try 
+			{
 
 				$class = "Imagine\\{$config['library']}\\Imagine";
 
@@ -81,17 +82,21 @@ $app->get(
 			    {
 			    	$exifData = exif_read_data($source_path . '/' . $filename);
 
-			    	switch($exifData['Orientation']) {
-					    case 8:
-					        $rotateVal = -90;
-					        break;
-					    case 3:
-					        $rotateVal = 180;
-					        break;
-					    case 6:
-					        $rotateVal = 90;
-					        break;
-					}
+			    	if(isset($exifData['Orientation']))
+			    	{
+			    		switch($exifData['Orientation']) 
+				    	{
+						    case 8:
+						        $rotateVal = -90;
+						        break;
+						    case 3:
+						        $rotateVal = 180;
+						        break;
+						    case 6:
+						        $rotateVal = 90;
+						        break;
+						}
+			    	}
 			    }
 				
 				if( ! empty($specs['width']) && ! empty($specs['height']))
@@ -119,8 +124,10 @@ $app->get(
 					$image->save($destination_path . '/' . $filename);
 				}
 
-			} catch (Imagine\Exception\Exception $e) {
-			    // handle the exception
+			} catch (Imagine\Exception\Exception $e) 
+			{
+			    // @todo Handle the exception
+				die;
 			}
 
 			// Set the headers... 
